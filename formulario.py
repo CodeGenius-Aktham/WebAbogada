@@ -4,3 +4,4 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app,origins='ejemplo.com',supports_credentials=True)
 
+
