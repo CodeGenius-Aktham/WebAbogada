@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Perfil Profesional</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .lift-on-hover {
+      transition: transform 1.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s cubic-bezier(.4,2,.6,1);
+      box-shadow: 0 2px 12px rgba(60,60,60,0.08);
+    }
+    .lift-on-hover:hover {
+      transform: translateY(-18px) scale(1.03);
+      box-shadow: 0 12px 32px rgba(60,60,60,0.18);
+      z-index: 2;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Navegación tipo pestañas -->
+  <div class="tabs">
+    <div class="tab active" data-tab="sobre">Sobre mí</div>
+    <div class="tab" data-tab="contacto">Contacto</div>
+  </div>
+
+  <!-- Encabezado de página -->
+  <div id="header" class="header" style="background: linear-gradient(rgba(34,34,34,0.55), rgba(34,34,34,0.55)), url('imagenes/IMG-20240614-WA0012.jpg') center/cover no-repeat; padding: 122px 0; border-radius: 18px; margin: 24px auto; max-width: 2000px; box-shadow: 0 4px 24px rgba(60,60,60,0.08);">
+    <h1 style="text-align: center; margin-bottom: 10px; color: #fff;">Perfil Profesional</h1>
+    <p style="text-align: center; margin-bottom: 22px; color: #f3f4f6;">Abogada con X años de experiencia</p>
+    <div style="text-align: center;" id="header-button">
+      <button id="contactame-btn" style="background: #5D3A00; color: #fff; border: none; border-radius: 8px; padding: 10px 28px; font-size: 1rem; cursor: pointer; transition: background 0.2s;">Contáctame</button>
+    </div>
+  </div>
+
+  <!-- Panel de estadísticas -->
+  <div id="stats" class="vision-panel">
+    <div class="stat">
+      <div class="number count-up" data-target="30">0</div>
+      <div class="label">Casos resueltos</div>
+    </div>
+    <div class="stat">
+      <div class="number count-up" data-target="60">0</div>
+      <div class="label">Formaciones en Ley</div>
+    </div>
+    <div class="stat">
+      <div class="number count-up" data-target="9">0</div>
+      <div class="label">Títulos en Leyes</div>
+    </div>
+  </div>
+
+  <!-- Galería -->
+  <div id="gallery" class="photo-grid">
+    <a href="caso1.html?id=1" class="photo-box">
+     <img src="imagenes/IMG-20240614-WA0012.jpg" alt="Caso 1" />
+    </a>
+    <a href="caso2.html?id=2" class="photo-box">
+      <img src="imagenes/IMG-20240618-WA0002.jpg" alt="Caso 2" />
+    </a>
+    <a href="caso3.html?id=3" class="photo-box">
+      <img src="imagenes/IMG-20241008-WA0145.jpg" alt="Caso 3" />
+    </a>
+    <a href="caso4.html?id=4" class="photo-box">
+      <img src="imagenes/IMG_20240620_103719_601.jpg" alt="Caso 4" />
+    </a>
+  </div>
+
+  <!-- Formulario -->
+  <div id="form" class="form-panel lift-on-hover">
+    <form class="formulario-contacto">
+      <div class="row">
+        <input type="text" placeholder="Nombre" required />
+        <input type="text" placeholder="Apellido" required />
+      </div>
+      <input type="email" placeholder="Correo electrónico" required />
+      <textarea placeholder="Escriba su caso aquí..." rows="5" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Bufete Legal. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const tabs = document.querySelectorAll(".tab");
+    const headerButton = document.getElementById("header-button");
+    const contactameBtn = document.getElementById("contactame-btn");
+    const header = document.getElementById("header");
+    const stats = document.getElementById("stats");
+    const gallery = document.getElementById("gallery");
+    const form = document.getElementById("form");
+
+    function mostrarContacto() {
+      headerButton.classList.add("hidden");
+      stats.classList.add("hidden");
+      gallery.classList.add("hidden");
+      form.classList.remove("hidden");
+
+      // Activar pestaña de contacto visualmente
+      tabs.forEach(t => t.classList.remove("active"));
+      document.querySelector('[data-tab="contacto"]').classList.add("active");
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        if (tab.dataset.tab === "contacto") {
+          mostrarContacto();
+        } else {
+          headerButton.classList.remove("hidden");
+          stats.classList.remove("hidden");
+          gallery.classList.remove("hidden");
+          form.classList.remove("hidden");
+        }
+      });
+    });
+
+    // Accion del boton "Contáctame" dentro del encabezado
+    contactameBtn.addEventListener("click", mostrarContacto);
+
+    function animateCountUp(element, target, duration = 2000) {
+      let start = 0;
+      const increment = target / (duration / 16);
+      const update = () => {
+        start += increment;
+        if (start >= target) {
+          element.textContent = target;
+        } else {
+          element.textContent = Math.floor(start);
+          requestAnimationFrame(update);
+        }
+      };
+      update();
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const counters = document.querySelectorAll(".count-up");
+      counters.forEach(counter => {
+        const target = +counter.getAttribute("data-target");
+        animateCountUp(counter, target);
+      });
+    });
+  </script>
+
+</body>
+</html>
