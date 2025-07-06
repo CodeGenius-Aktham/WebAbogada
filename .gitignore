@@ -1,0 +1,23 @@
+# Entornos virtuales
+.env/
+.venv/
+env/
+venv/
+
+# Variables de entorno (importante para PostgreSQL)
+.env
+*.env
+
+# Cachés de Python
+__pycache__/
+*.py[cod]
+
+# Archivos de logs
+*.log
+
+# Archivos de VSCode
+.vscode/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
