@@ -31,6 +31,7 @@ def conexion_db():
         print(f"Error de conexion con la base de datos : {error}.")
         return None
 
+# Envio de correo electronico.
 # Enrutador para envio de emails.
 @app.route('/email', methods = ['POST'])
 def envio_email():

@@ -30,6 +30,7 @@ def conexion_db():
         print(f"Error de conexion con la base de datos: {error}.")
         return None
 
+# Ingreso del formulario del cliente.
 # Ingreso y enrutador de los clientes.
 @app.route('/customer', methods=['POST'])
 def ingreso_caso():
