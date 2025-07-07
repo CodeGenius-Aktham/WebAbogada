@@ -22,7 +22,7 @@ def conexion_db():
             user = os.getenv('DB_USER'),
             password = os.getenv('DB_PASSWORD'),
             port = os.getenv('DB_PORT'),
-            ssl =  os.getenv('DB_SSL')
+            sslmode =  os.getenv('DB_SSL')
         )
         return conn # Retorno de la conexion
     except IntegrityError as error:

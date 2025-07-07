@@ -23,13 +23,15 @@ def conexion_db():
             user = os.getenv('DB_USER'),
             password = os.getenv('DB_PASSWORD'),
             port = os.getenv('DB_PORT'),
-            ssl = os.getenv('DB_SSL')
+            sslmode = os.getenv('DB_SSL')
         )
         return conn # Retorno de la conexion
+    except Exception as error:
+        print(f"error de conexion con la base de datos : {error}.")
+        return None
     except IntegrityError as error:
         conn.rollback() # Se deshacen los cambios si la conexion falla.
-        print(f"Error de conexion con la base de datos : {error}.")
-        return None
+        return jsonify({'error' : 'error de integridad con la base de datos.'}),400
 
 # Envio de correo electronico.
 # Enrutador para envio de emails.
@@ -63,16 +65,16 @@ def envio_email():
             return jsonify({'error' : 'email y mensaje no encontrado.'}),400
         
         # Crea el cuerpo del correo electronico.
-        mensage = MIMEText(mensaje_usuario)
-        mensage['Subject'] = asunto
-        mensage['From'] = correo_usuario
-        mensage['To'] = destinatario
+        mensaje = MIMEText(mensaje_usuario)
+        mensaje['Subject'] = asunto
+        mensaje['From'] = correo_usuario
+        mensaje['To'] = destinatario
 
         # Conexion con el servidor de Gmail.
         server = smtplib.SMTP_SSL('smtp.gmail.com',465)
         server.ehlo() # Identifica al servidor.
-        server.login(os.getenv('EMAIL_DESTINO'),os.getenv('EMAIL_PASSWORD')) # Inicio del login con el email.
-        server.sendmail(correo_usuario,destinatario,mensage.as_string()) # Envio del mensaje
+        server.login(os.getenv('EMAIL_ORIGEN'),os.getenv('EMAIL_PASSWORD')) # Inicio del login con el email.
+        server.sendmail(os.getenv('EMAIL_ORIGEN'),destinatario,mensaje.as_string()) # Envio del mensaje
         server.quit() # Cierre del servidor.
         return jsonify({'mensaje' : 'correo enviado correctamente.'}),200
     # Manejo de errores.
@@ -81,3 +83,6 @@ def envio_email():
         return jsonify({'error' : 'error inesperado en el sistema.'}),400
     except Exception as error:
         return jsonify({'error': f'error inesperado en el programa : {str(error)}.'}),400
+    finally:
+        cursor.close() # Cierra el cursor.
+        conn.close() # Cierra la conexion con la base de datos.
