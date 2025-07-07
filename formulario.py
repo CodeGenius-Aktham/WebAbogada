@@ -25,10 +25,12 @@ def conexion_db():
             sslmode =  os.getenv('DB_SSL')
         )
         return conn # Retorno de la conexion
+    except Exception as error:
+        print(f"error de conexion con la base de datos : {error}.")
+        return None
     except IntegrityError as error:
         conn.rollback() # Se deshacen los cambios si la conexion falla.
-        print(f"Error de conexion con la base de datos: {error}.")
-        return None
+        return jsonify({'error' : 'error de integridad con la base de datos.'}),400
 
 # Ingreso del formulario del cliente.
 # Ingreso y enrutador de los clientes.
