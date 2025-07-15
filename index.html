@@ -4,9 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Perfil Profesional</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet" />
   <style>
+    body {
+      font-family: 'Merriweather', serif;
+      margin: 0; padding: 0;
+      background: #f9f9f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
     .lift-on-hover {
       transition: transform 1.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s cubic-bezier(.4,2,.6,1);
       box-shadow: 0 2px 12px rgba(60,60,60,0.08);
@@ -16,14 +24,11 @@
       box-shadow: 0 12px 32px rgba(60,60,60,0.18);
       z-index: 2;
     }
-
     .hidden { display: none; }
-
     .section-title {
       text-align: center;
       margin: 60px auto 24px;
     }
-
     .section-title h2 {
       font-size: 1.8rem;
       font-weight: 700;
@@ -35,14 +40,108 @@
       border-radius: 16px;
       box-shadow: 0 8px 28px rgba(0,0,0,0.08);
     }
-
     /* BOTÓN CENTRADO */
     #header-button {
       text-align: center;
       margin-top: 24px;
     }
-
-    /* CONTENEDOR INFO ABOGADA - Desktop */
+    /* Navegación tipo pestañas */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 24px;
+      gap: 20px;
+    }
+    .tab {
+      padding: 10px 22px;
+      cursor: pointer;
+      font-weight: 700;
+      color: #5D3A00;
+      border-bottom: 3px solid transparent;
+      user-select: none;
+      transition: border-color 0.3s;
+    }
+    .tab.active {
+      border-bottom: 3px solid #5D3A00;
+    }
+    /* Header */
+    #header {
+      background: linear-gradient(rgba(34,34,34,0.55), rgba(34,34,34,0.55)), url('imagenes/1.png') center/cover no-repeat;
+      padding: 122px 20px 80px;
+      border-radius: 18px;
+      margin: 24px auto;
+      max-width: 2000px;
+      box-shadow: 0 4px 24px rgba(60,60,60,0.08);
+      color: #fff;
+      text-align: center;
+    }
+    #header h1 {
+      margin-bottom: 10px;
+    }
+    #header p {
+      margin-bottom: 22px;
+      font-size: 1.1rem;
+    }
+    #contactame-btn {
+      background: #5D3A00;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 28px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #contactame-btn:hover {
+      background: #7a5200;
+    }
+    /* Estadísticas */
+    #stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 40px auto;
+      max-width: 1000px;
+      color: #5D3A00;
+    }
+    #stats .stat {
+      text-align: center;
+    }
+    #stats .number {
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    #stats .label {
+      font-size: 1.1rem;
+      margin-top: 6px;
+    }
+    /* Galería */
+    #gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 12px;
+    }
+    #gallery a {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    #gallery a:hover {
+      transform: scale(1.03);
+      z-index: 2;
+    }
+    #gallery img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+    }
+    /* Contenedor info abogada con paneles */
     #info-abogada {
       display: flex;
       gap: 30px;
@@ -51,11 +150,6 @@
       position: relative;
       height: 500px;
     }
-
-    #info-abogada > div:first-child {
-      flex: 1;
-    }
-
     #info-abogada > div:first-child img {
       width: 100%;
       height: 100%;
@@ -63,14 +157,12 @@
       border-radius: 18px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     }
-
     #contenedor-ventanas {
       flex: 1;
       position: relative;
       height: 100%;
       border: 1px solid transparent;
     }
-
     .ventana {
       position: absolute;
       width: 280px;
@@ -79,328 +171,260 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.12);
       user-select: none;
     }
-
-    .ventana .titulo-ventana {
+    .titulo-ventana {
       background: #5D3A00;
       color: white;
       padding: 12px;
       border-radius: 12px 12px 0 0;
       font-weight: 700;
-      user-select: none;
       cursor: grab;
+      user-select: none;
     }
-    .ventana .titulo-ventana:active {
+    .titulo-ventana:active {
       cursor: grabbing;
     }
-
-    /* Posiciones iniciales de ventanas desktop */
-    .ventana:nth-child(1) {
-      top: 0;
-      left: 0;
+    /* Ventanas posiciones iniciales */
+    #contenedor-ventanas .ventana:nth-child(1) { top: 0; left: 0; }
+    #contenedor-ventanas .ventana:nth-child(2) { top: 80px; left: 160px; }
+    #contenedor-ventanas .ventana:nth-child(3) { top: 180px; left: 80px; }
+    /* Formulario contacto */
+    #form {
+      max-width: 600px;
+      margin: 40px auto 80px;
+      padding: 20px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     }
-    .ventana:nth-child(2) {
-      top: 80px;
-      left: 160px;
+    #form form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
-    .ventana:nth-child(3) {
-      top: 180px;
-      left: 80px;
+    #form .row {
+      display: flex;
+      gap: 14px;
     }
-
-    /* Responsive - Teléfono */
+    #form input, #form textarea {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: 'Merriweather', serif;
+      resize: vertical;
+    }
+    #form button {
+      background: #5D3A00;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #form button:hover {
+      background: #7a5200;
+    }
+    /* Testimonios */
+    #testimonios {
+      flex-direction: column;
+      text-align: center;
+      margin: 40px auto 60px;
+      max-width: 700px;
+      position: relative;
+      background: white;
+      padding: 30px 20px 40px;
+      border-radius: 18px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      color: #2d2d2d;
+    }
+    #testimonios h3 {
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      color: #5D3A00;
+    }
+    #testimonio-contenido {
+      font-size: 1.1rem;
+      font-style: italic;
+      margin: 0 auto 1rem;
+      max-width: 600px;
+    }
+    #testimonio-autor {
+      font-weight: bold;
+      color: #5D3A00;
+      margin-bottom: 8px;
+    }
+    #estrellas-container {
+      font-size: 1.4rem;
+      color: gold;
+      margin-bottom: 12px;
+    }
+    #prev-testimonio, #next-testimonio {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: #5D3A00;
+      cursor: pointer;
+      user-select: none;
+      padding: 0;
+    }
+    #prev-testimonio { left: 20px; }
+    #next-testimonio { right: 20px; }
+    /* Footer */
+    footer.footer {
+      background: #5D3A00;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      font-family: 'Merriweather', serif;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+      margin-top: auto;
+    }
+    footer.footer .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    footer.footer p {
+      margin: 6px 0;
+    }
+    footer.footer a img {
+      margin: 0 10px;
+      vertical-align: middle;
+      border-radius: 70px;
+      transition: transform 0.3s ease;
+    }
+    footer.footer a img:hover {
+      transform: scale(1.1);
+    }
+    /* RESPONSIVE */
     @media (max-width: 767px) {
       #info-abogada {
         flex-direction: column;
         height: auto;
-        max-width: 90%;
       }
-
       #info-abogada > div:first-child {
-        height: 250px;
+        width: 100%;
+        height: auto;
+        max-height: 320px;
+        margin-bottom: 30px;
       }
-
       #info-abogada > div:first-child img {
-        height: 100%;
+        height: 320px;
+        object-fit: contain;
         border-radius: 18px;
         box-shadow: 0 6px 20px rgba(0,0,0,0.15);
       }
-
       #contenedor-ventanas {
         position: static;
+        width: 100%;
         height: auto;
-        border: none;
-        margin-top: 20px;
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 20px;
       }
-
       .ventana {
-        position: static !important;
-        width: 100%;
+        position: relative !important;
+        width: 100% !important;
+        top: auto !important;
+        left: auto !important;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
         cursor: default;
       }
-
-      .ventana .titulo-ventana {
+      .titulo-ventana {
         cursor: default;
+      }
+      #stats {
+        flex-direction: column;
+        gap: 24px;
+        margin: 20px auto 40px;
+      }
+      #gallery {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        max-width: 100%;
+        margin: 24px 0;
+        padding: 0 12px;
       }
     }
   </style>
 </head>
 <body>
-
-  <!-- Navegación tipo pestañas -->
-  <div class="tabs">
-    <div class="tab active" data-tab="sobre">Sobre mí</div>
-    <div class="tab" data-tab="contacto">Contacto</div>
-  </div>
-
-  <!-- Encabezado de página -->
-  <div id="header" class="header" style="background: linear-gradient(rgba(34,34,34,0.55), rgba(34,34,34,0.55)), url('imagenes/1.png') center/cover no-repeat; padding: 122px 0; border-radius: 18px; margin: 24px auto; max-width: 2000px; box-shadow: 0 4px 24px rgba(60,60,60,0.08);">
-    <h1 style="text-align: center; margin-bottom: 10px; color: #fff;">Perfil Profesional</h1>
-    <p style="text-align: center; margin-bottom: 22px; color: #f3f4f6;">Abogada con X años de experiencia</p>
+  <header id="header">
+    <h1>Bufete Legal</h1>
+    <p>Tu aliado en defensa legal</p>
     <div id="header-button">
-      <button id="contactame-btn" style="background: #5D3A00; color: #fff; border: none; border-radius: 8px; padding: 10px 28px; font-size: 1rem; cursor: pointer; transition: background 0.2s;">Contáctame</button>
+      <button id="contactame-btn">Contáctame</button>
     </div>
-  </div>
-
-  <!-- Panel de estadísticas -->
-  <div id="stats" class="vision-panel">
-    <div class="stat">
-      <div class="number count-up" data-target="30">0</div>
-      <div class="label">Casos resueltos</div>
+    <div id="stats">
+      <div class="stat">
+        <div class="number">600</div>
+        <div class="label">Casos Ganados</div>
+      </div>
+      <div class="stat">
+        <div class="number">80</div>
+        <div class="label">Casos Abiertos</div>
+      </div>
+      <div class="stat">
+        <div class="number">20</div>
+        <div class="label">Años de Experiencia</div>
+      </div>
     </div>
-    <div class="stat">
-      <div class="number count-up" data-target="60">0</div>
-      <div class="label">Formaciones en Ley</div>
-    </div>
-    <div class="stat">
-      <div class="number count-up" data-target="9">0</div>
-      <div class="label">Títulos en Leyes</div>
-    </div>
-  </div>
+  </header>
 
-  <!-- Título de la galería -->
-  <div id="titulo-casos" class="section-title">
-    <h2>Casos Destacados</h2>
-  </div>
+  <section id="gallery">
+    <a href="#"><img src="imagenes/caso1.jpg" alt="Caso 1"/></a>
+    <a href="#"><img src="imagenes/caso2.jpg" alt="Caso 2"/></a>
+    <a href="#"><img src="imagenes/caso3.jpg" alt="Caso 3"/></a>
+    <a href="#"><img src="imagenes/caso4.jpg" alt="Caso 4"/></a>
+  </section>
 
-  <!-- Galería -->
-  <div id="gallery" class="photo-grid">
-    <a href="caso1.html?id=1" class="photo-box">
-     <img src="imagenes/1.png" alt="Caso 1" />
-    </a>
-    <a href="caso2.html?id=2" class="photo-box">
-      <img src="imagenes/2.png" alt="Caso 2" />
-    </a>
-    <a href="caso3.html?id=3" class="photo-box">
-      <img src="imagenes/3.png" alt="Caso 3" />
-    </a>
-    <a href="caso4.html?id=4" class="photo-box">
-      <img src="imagenes/4.png" alt="Caso 4" />
-    </a>
-  </div>
-
-  <!-- Contenedor padre con position relative y tamaño definido -->
-  <div id="info-abogada">
-
-    <!-- Imagen izquierda -->
+  <section id="info-abogada">
     <div>
-      <img src="imagenes/abogada-ejemplo.jpg" alt="Abogada">
+      <img src="imagenes/abogada.jpg" alt="Abogada"/>
     </div>
-
-    <!-- Contenedor de ventanas movibles -->
     <div id="contenedor-ventanas">
-      
-      <div class="ventana">
-        <div class="titulo-ventana">
-          Experiencia
-        </div>
-        <div style="padding: 14px; font-family: 'Merriweather', serif; font-size: 0.95rem; color: #2d2d2d;">
-          Más de 10 años ayudando a clientes en derecho civil, penal y corporativo.
-        </div>
+      <div class="ventana lift-on-hover" style="top:0; left:0;">
+        <div class="titulo-ventana">Experiencia</div>
+        <p style="padding: 14px;">Más de 20 años en derecho penal y civil, con casos de alta complejidad.</p>
       </div>
-
-      <div class="ventana">
-        <div class="titulo-ventana">
-          Filosofía
-        </div>
-        <div style="padding: 14px; font-family: 'Merriweather', serif; font-size: 0.95rem; color: #2d2d2d;">
-          Mi prioridad es la atención personalizada y la búsqueda de soluciones efectivas para cada caso.
-        </div>
+      <div class="ventana lift-on-hover" style="top:80px; left:160px;">
+        <div class="titulo-ventana">Casos Destacados</div>
+        <p style="padding: 14px;">Representación exitosa en casos de defensa corporativa y familiar.</p>
       </div>
-
-      <div class="ventana">
-        <div class="titulo-ventana">
-          Áreas de práctica
-        </div>
-        <div style="padding: 14px; font-family: 'Merriweather', serif; font-size: 0.95rem; color: #2d2d2d;">
-          Derecho familiar, laboral, penal y asesoría corporativa para PYMEs y particulares.
-        </div>
+      <div class="ventana lift-on-hover" style="top:180px; left:80px;">
+        <div class="titulo-ventana">Testimonios</div>
+        <p style="padding: 14px;">"La mejor abogada que he conocido, muy profesional y dedicada."</p>
       </div>
-
     </div>
-  </div>
+  </section>
 
-  <!-- Título "Contáctame" sobre el formulario -->
-  <div id="titulo-contacto" class="section-title">
-    <h2>Contáctame</h2>
-  </div>
-
-  <!-- Formulario -->
-  <div id="form" class="form-panel lift-on-hover">
-    <form id="contact-form" class="formulario-contacto">
-      <div class="row" style="display:flex; gap:10px; margin-bottom:10px;">
-        <input type="text" name="nombre" placeholder="Nombre" required style="flex:1; padding:8px;"/>
-        <input type="text" name="apellido" placeholder="Apellido" required style="flex:1; padding:8px;"/>
+  <section id="form">
+    <form>
+      <div class="row">
+        <input type="text" placeholder="Nombre completo" required />
+        <input type="email" placeholder="Correo electrónico" required />
       </div>
-      <input type="email" name="correo" placeholder="Correo electrónico" required style="width:100%; padding:8px; margin-bottom:10px;"/>
-      <textarea name="mensaje" placeholder="Escriba su caso aquí..." rows="5" required style="width:100%; padding:8px; margin-bottom:10px;"></textarea>
-      <button type="submit" style="background:#5D3A00; color:#fff; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:1rem;">Enviar</button>
+      <textarea placeholder="Mensaje" rows="4" required></textarea>
+      <button type="submit">Enviar</button>
     </form>
-  </div>
+  </section>
 
-  <!-- Panel de Testimonios -->
-  <div id="testimonios" class="vision-panel lift-on-hover" style="flex-direction: column; text-align: center; margin-top: 40px; position: relative;">
-    <h3 style="margin-bottom: 1rem; font-size: 1.4rem;">Testimonios de Clientes</h3>
-
-    <div id="testimonio-contenido" style="font-size: 1.1rem; font-style: italic; max-width: 600px; margin: 0 auto 1rem;">
-      “Gracias a su dedicación, pude resolver mi situación legal con rapidez y claridad. La recomiendo totalmente.”
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 Bufete Legal. Todos los derechos reservados.</p>
+      <p>Conóceme más en:</p>
+      <a href="caso1.html"><img src="imagenes/Instagram.png" height="40px" alt="Instagram" /></a>
+      <a href="caso2.html"><img src="imagenes/facebook.png" height="40px" alt="Facebook" /></a>
+      <a href="caso3.html"><img src="imagenes/X.png" height="33px" alt="X" /></a>
     </div>
-
-    <div id="testimonio-autor" style="font-weight: bold; color: #5D3A00;">
-      — Marta López
-    </div>
-
-    <!-- Estrellas -->
-    <div id="estrellas-container" style="margin-top: 8px; font-size: 1.4rem; color: gold;">
-      ★★★★★
-    </div>
-
-    <!-- Botones de navegación -->
-    <button id="prev-testimonio" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 2rem; color: #5D3A00; cursor: pointer;">&#8249;</button>
-    <button id="next-testimonio" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 2rem; color: #5D3A00; cursor: pointer;">&#8250;</button>
-  </div>
+  </footer>
 
   <script>
-    // Contar números animados
-    function animateCountUp(el) {
-      const target = +el.getAttribute('data-target');
-      let count = 0;
-      const increment = Math.ceil(target / 60);
-      const interval = setInterval(() => {
-        count += increment;
-        if (count >= target) {
-          el.textContent = target;
-          clearInterval(interval);
-        } else {
-          el.textContent = count;
-        }
-      }, 16);
-    }
-
-    document.querySelectorAll('.count-up').forEach(el => animateCountUp(el));
-
-    // Tabs simples
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        // Aquí se puede mostrar contenido según tab, si deseas
-      });
-    });
-
-    // Testimonios
-    const testimonios = [
-      {
-        texto: "Gracias a su dedicación, pude resolver mi situación legal con rapidez y claridad. La recomiendo totalmente.",
-        autor: "Marta López",
-        estrellas: 5
-      },
-      {
-        texto: "Un profesional confiable y atento que siempre escucha y brinda soluciones.",
-        autor: "Juan Pérez",
-        estrellas: 4
-      },
-      {
-        texto: "Excelente atención y resultados efectivos en mi caso legal.",
-        autor: "Ana Gómez",
-        estrellas: 5
-      }
-    ];
-    let testIndex = 0;
-    const contenidoTest = document.getElementById('testimonio-contenido');
-    const autorTest = document.getElementById('testimonio-autor');
-    const estrellasCont = document.getElementById('estrellas-container');
-
-    function mostrarTestimonio(i) {
-      const t = testimonios[i];
-      contenidoTest.textContent = `“${t.texto}”`;
-      autorTest.textContent = `— ${t.autor}`;
-      estrellasCont.textContent = '★'.repeat(t.estrellas) + '☆'.repeat(5 - t.estrellas);
-    }
-
-    document.getElementById('prev-testimonio').addEventListener('click', () => {
-      testIndex = (testIndex - 1 + testimonios.length) % testimonios.length;
-      mostrarTestimonio(testIndex);
-    });
-
-    document.getElementById('next-testimonio').addEventListener('click', () => {
-      testIndex = (testIndex + 1) % testimonios.length;
-      mostrarTestimonio(testIndex);
-    });
-
-    mostrarTestimonio(testIndex);
-
-    // Drag para ventanas movibles solo en desktop
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    if (!isMobile) {
-      const contenedor = document.getElementById('contenedor-ventanas');
-
-      document.querySelectorAll('.ventana').forEach(ventana => {
-        const barraTitulo = ventana.querySelector('.titulo-ventana');
-
-        barraTitulo.onmousedown = function(event) {
-          event.preventDefault();
-
-          const contenedorRect = contenedor.getBoundingClientRect();
-          const ventanaRect = ventana.getBoundingClientRect();
-
-          const offsetX = event.clientX - ventanaRect.left;
-          const offsetY = event.clientY - ventanaRect.top;
-
-          function onMouseMove(moveEvent) {
-            let newLeft = moveEvent.clientX - contenedorRect.left - offsetX;
-            let newTop = moveEvent.clientY - contenedorRect.top - offsetY;
-
-            const maxLeft = contenedor.clientWidth - ventana.offsetWidth;
-            const maxTop = contenedor.clientHeight - ventana.offsetHeight;
-
-            if (newLeft < 0) newLeft = 0;
-            if (newLeft > maxLeft) newLeft = maxLeft;
-
-            if (newTop < 0) newTop = 0;
-            if (newTop > maxTop) newTop = maxTop;
-
-            ventana.style.left = newLeft + 'px';
-            ventana.style.top = newTop + 'px';
-          }
-
-          document.addEventListener('mousemove', onMouseMove);
-
-          document.addEventListener('mouseup', () => {
-            document.removeEventListener('mousemove', onMouseMove);
-          }, { once: true });
-        };
-
-        barraTitulo.ondragstart = () => false;
-      });
-    }
-
-    // Botón "Contáctame" para scroll al formulario
-    document.getElementById('contactame-btn').addEventListener('click', () => {
-      document.getElementById('form').scrollIntoView({behavior: "smooth"});
-    });
+    // Si quieres agregar funcionalidad JS para tabs, drag ventanas u otra cosa, dime.
   </script>
 </body>
 </html>
