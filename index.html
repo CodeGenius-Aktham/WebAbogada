@@ -115,7 +115,7 @@
     </form>
   </div>
 
- <!-- Panel de Testimonios -->
+<!-- Panel de Testimonios -->
 <div id="testimonios" class="vision-panel lift-on-hover" style="flex-direction: column; text-align: center; margin-top: 40px; position: relative;">
   <h3 style="margin-bottom: 1rem; font-size: 1.4rem;">Testimonios de Clientes</h3>
 
@@ -127,10 +127,16 @@
     — Marta López
   </div>
 
+  <!-- Estrellas -->
+  <div id="estrellas-container" style="margin-top: 8px; font-size: 1.4rem; color: gold;">
+    ★★★★★
+  </div>
+
   <!-- Botones de navegación -->
   <button id="prev-testimonio" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 2rem; color: #5D3A00; cursor: pointer;">&#8249;</button>
   <button id="next-testimonio" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 2rem; color: #5D3A00; cursor: pointer;">&#8250;</button>
 </div>
+
 
 <!-- Resto del contenido -->
 <div class="mas_a_profundidad_de_mi"></div>
@@ -252,31 +258,44 @@
     });
   });
 
-  // Testimonios rotativos
+ // Testimonios rotativos CON PUNTUACIÓN DE ESTRELLAS
   const testimonios = [
     {
       texto: "“Gracias a su dedicación, pude resolver mi situación legal con rapidez y claridad. La recomiendo totalmente.”",
-      autor: "— Marta López"
+      autor: "— Marta López",
+      estrellas: 5
     },
     {
       texto: "“Un servicio excepcional, muy profesional. Me sentí acompañada durante todo el proceso.”",
-      autor: "— Juan Pérez"
+      autor: "— Juan Pérez",
+      estrellas: 4
     },
     {
       texto: "“Siempre estuvo disponible para mis dudas y fue muy clara explicando todo. Excelente abogada.”",
-      autor: "— Ana Fernández"
+      autor: "— Ana Fernández",
+      estrellas: 5
     }
   ];
 
   let indiceTestimonio = 0;
   const contenido = document.getElementById("testimonio-contenido");
   const autor = document.getElementById("testimonio-autor");
+  const estrellasContainer = document.getElementById("estrellas-container");
   const prevBtn = document.getElementById("prev-testimonio");
   const nextBtn = document.getElementById("next-testimonio");
 
   function mostrarTestimonio(i) {
-    contenido.textContent = testimonios[i].texto;
-    autor.textContent = testimonios[i].autor;
+    const t = testimonios[i];
+    contenido.textContent = t.texto;
+    autor.textContent = t.autor;
+
+    // Estrellas
+    estrellasContainer.innerHTML = '';
+    for (let j = 1; j <= 5; j++) {
+      const estrella = document.createElement('span');
+      estrella.textContent = j <= t.estrellas ? '★' : '☆';
+      estrellasContainer.appendChild(estrella);
+    }
   }
 
   prevBtn.addEventListener("click", () => {
@@ -286,6 +305,11 @@
 
   nextBtn.addEventListener("click", () => {
     indiceTestimonio = (indiceTestimonio + 1) % testimonios.length;
+    mostrarTestimonio(indiceTestimonio);
+  });
+
+  // Mostrar el primero al cargar
+  document.addEventListener("DOMContentLoaded", () => {
     mostrarTestimonio(indiceTestimonio);
   });
 </script>
