@@ -298,43 +298,30 @@
   <script>
 
 
-
 document.getElementById('contactame-btn').addEventListener('click', () => {
-  // IDs de secciones a mostrar
   const mostrarIDs = ['header', 'form', 'testimonios'];
-  const mostrarTag = document.querySelector('footer');
+  const footer = document.querySelector('footer');
 
-  // Mostrar secciones necesarias
+  // Mostrar los elementos deseados
   mostrarIDs.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = '';
   });
-  if (mostrarTag) mostrarTag.style.display = '';
+  if (footer) footer.style.display = '';
 
-  // Ocultar todas las demás secciones principales
-  const seccionesOcultar = [
-    '.tabs',
-    '#stats',
-    '#titulo-casos',
-    '#gallery',
-    '#info-abogada',
-    '#titulo-contacto',
-    '.section-title',  // Por si quedan títulos duplicados
-    '.vision-panel'    // Por si hay otros paneles visuales
-  ];
-
-  seccionesOcultar.forEach(selector => {
-    document.querySelectorAll(selector).forEach(el => {
-      if (!mostrarIDs.includes(el.id)) {
-        el.style.display = 'none';
-      }
-    });
+  // Ocultar todos los hijos directos del <body> excepto los que queremos
+  document.querySelectorAll('body > *').forEach(el => {
+    if (
+      !mostrarIDs.includes(el.id) &&
+      el.tagName.toLowerCase() !== 'footer'
+    ) {
+      el.style.display = 'none';
+    }
   });
 
-  // Scroll suave hacia el formulario
+  // Hacer scroll suave al formulario
   document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
 });
-
 
 
 
