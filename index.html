@@ -115,79 +115,177 @@
     </form>
   </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2025 Bufete Legal. Todos los derechos reservados.</p>
-    </div>
-  </footer>
+ <!-- Panel de Testimonios -->
+<div id="testimonios" class="vision-panel lift-on-hover" style="flex-direction: column; text-align: center; margin-top: 40px; position: relative;">
+  <h3 style="margin-bottom: 1rem; font-size: 1.4rem;">Testimonios de Clientes</h3>
 
-  <!-- Scripts -->
-  <script>
-    const tabs = document.querySelectorAll(".tab");
-    const headerButton = document.getElementById("header-button");
-    const contactameBtn = document.getElementById("contactame-btn");
-    const stats = document.getElementById("stats");
-    const gallery = document.getElementById("gallery");
-    const form = document.getElementById("form");
-    const tituloCasos = document.getElementById("titulo-casos");
-    const tituloContacto = document.getElementById("titulo-contacto");
+  <div id="testimonio-contenido" style="font-size: 1.1rem; font-style: italic; max-width: 600px; margin: 0 auto 1rem;">
+    “Gracias a su dedicación, pude resolver mi situación legal con rapidez y claridad. La recomiendo totalmente.”
+  </div>
 
-    function mostrarContacto() {
-      headerButton.classList.add("hidden");
-      stats.classList.add("hidden");
-      gallery.classList.add("hidden");
-      tituloCasos.classList.add("hidden");
-      tituloContacto.classList.add("hidden");
-      form.classList.remove("hidden");
+  <div id="testimonio-autor" style="font-weight: bold; color: #5D3A00;">
+    — Marta López
+  </div>
 
-      tabs.forEach(t => t.classList.remove("active"));
-      document.querySelector('[data-tab="contacto"]').classList.add("active");
-    }
+  <!-- Botones de navegación -->
+  <button id="prev-testimonio" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 2rem; color: #5D3A00; cursor: pointer;">&#8249;</button>
+  <button id="next-testimonio" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 2rem; color: #5D3A00; cursor: pointer;">&#8250;</button>
+</div>
 
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        tabs.forEach(t => t.classList.remove("active"));
-        tab.classList.add("active");
+<!-- Resto del contenido -->
+<div class="mas_a_profundidad_de_mi"></div>
 
-        if (tab.dataset.tab === "contacto") {
-          mostrarContacto();
-        } else {
-          headerButton.classList.remove("hidden");
-          stats.classList.remove("hidden");
-          gallery.classList.remove("hidden");
-          tituloCasos.classList.remove("hidden");
-          tituloContacto.classList.remove("hidden");
-          form.classList.remove("hidden");
-        }
-      });
-    });
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2025 Bufete Legal. Todos los derechos reservados.</p>
+    <p>Conoceme más en:</p>
+    <a href="caso1.html"><img src="/imagenes/Instagram.png" height="40px" style="border-radius: 70px;"></a>
+    <a href="caso2.html"><img src="imagenes/facebook.png" height="40px" style="border-radius: 70px;"></a>
+    <a href="caso3.html"><img src="imagenes/X.png" height="33px" style="border-radius: 70px;"></a>
+  </div>
+</footer>
 
-    contactameBtn.addEventListener("click", mostrarContacto);
+<!-- Scripts -->
+<script>
+  // Manejo del formulario de contacto
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contact-form");
 
-    function animateCountUp(element, target, duration = 2000) {
-      let start = 0;
-      const increment = target / (duration / 16);
-      const update = () => {
-        start += increment;
-        if (start >= target) {
-          element.textContent = target;
-        } else {
-          element.textContent = Math.floor(start);
-          requestAnimationFrame(update);
-        }
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = {
+        nombre: form.nombre.value.trim(),
+        apellido: form.apellido.value.trim(),
+        correo: form.correo.value.trim(),
+        mensaje: form.mensaje.value.trim()
       };
-      update();
-    }
 
-    window.addEventListener("DOMContentLoaded", () => {
-      const counters = document.querySelectorAll(".count-up");
-      counters.forEach(counter => {
-        const target = +counter.getAttribute("data-target");
-        animateCountUp(counter, target);
-      });
+      try {
+        const response = await fetch("https://tu-backend.com/customer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(formData),
+          credentials: "include"
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert(result.mensaje || "Formulario enviado con éxito.");
+          form.reset();
+        } else {
+          alert(result.error || "Hubo un problema al enviar el formulario.");
+        }
+      } catch (error) {
+        alert("Error de red o del servidor.");
+        console.error(error);
+      }
     });
-  </script>
+  });
 
-</body>
-</html>
+  const tabs = document.querySelectorAll(".tab");
+  const headerButton = document.getElementById("header-button");
+  const contactameBtn = document.getElementById("contactame-btn");
+  const stats = document.getElementById("stats");
+  const gallery = document.getElementById("gallery");
+  const form = document.getElementById("form");
+  const tituloCasos = document.getElementById("titulo-casos");
+  const tituloContacto = document.getElementById("titulo-contacto");
+  const valores = document.getElementById("valores");
+
+  function mostrarContacto() {
+    headerButton.classList.add("hidden");
+    stats.classList.add("hidden");
+    gallery.classList.add("hidden");
+    tituloCasos.classList.add("hidden");
+    tituloContacto.classList.add("hidden");
+    form.classList.remove("hidden");
+
+    tabs.forEach(t => t.classList.remove("active"));
+    document.querySelector('[data-tab="contacto"]').classList.add("active");
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      if (tab.dataset.tab === "contacto") {
+        mostrarContacto();
+      } else {
+        headerButton.classList.remove("hidden");
+        stats.classList.remove("hidden");
+        gallery.classList.remove("hidden");
+        tituloCasos.classList.remove("hidden");
+        tituloContacto.classList.remove("hidden");
+        form.classList.remove("hidden");
+        valores.classList.remove("hidden");
+      }
+    });
+  });
+
+  contactameBtn.addEventListener("click", mostrarContacto);
+
+  function animateCountUp(element, target, duration = 2000) {
+    let start = 0;
+    const increment = target / (duration / 16);
+    const update = () => {
+      start += increment;
+      if (start >= target) {
+        element.textContent = target;
+      } else {
+        element.textContent = Math.floor(start);
+        requestAnimationFrame(update);
+      }
+    };
+    update();
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const counters = document.querySelectorAll(".count-up");
+    counters.forEach(counter => {
+      const target = +counter.getAttribute("data-target");
+      animateCountUp(counter, target);
+    });
+  });
+
+  // Testimonios rotativos
+  const testimonios = [
+    {
+      texto: "“Gracias a su dedicación, pude resolver mi situación legal con rapidez y claridad. La recomiendo totalmente.”",
+      autor: "— Marta López"
+    },
+    {
+      texto: "“Un servicio excepcional, muy profesional. Me sentí acompañada durante todo el proceso.”",
+      autor: "— Juan Pérez"
+    },
+    {
+      texto: "“Siempre estuvo disponible para mis dudas y fue muy clara explicando todo. Excelente abogada.”",
+      autor: "— Ana Fernández"
+    }
+  ];
+
+  let indiceTestimonio = 0;
+  const contenido = document.getElementById("testimonio-contenido");
+  const autor = document.getElementById("testimonio-autor");
+  const prevBtn = document.getElementById("prev-testimonio");
+  const nextBtn = document.getElementById("next-testimonio");
+
+  function mostrarTestimonio(i) {
+    contenido.textContent = testimonios[i].texto;
+    autor.textContent = testimonios[i].autor;
+  }
+
+  prevBtn.addEventListener("click", () => {
+    indiceTestimonio = (indiceTestimonio - 1 + testimonios.length) % testimonios.length;
+    mostrarTestimonio(indiceTestimonio);
+  });
+
+  nextBtn.addEventListener("click", () => {
+    indiceTestimonio = (indiceTestimonio + 1) % testimonios.length;
+    mostrarTestimonio(indiceTestimonio);
+  });
+</script>
