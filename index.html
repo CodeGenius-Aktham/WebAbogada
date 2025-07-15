@@ -16,7 +16,31 @@
       box-shadow: 0 12px 32px rgba(60,60,60,0.18);
       z-index: 2;
     }
+
     .hidden { display: none; }
+
+    .section-title {
+      text-align: center;
+      margin: 60px auto 24px;
+    }
+
+    .section-title h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1f2937;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(6px);
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+    }
+
+    /* BOTÓN CENTRADO */
+    #header-button {
+      text-align: center;
+      margin-top: 24px;
+    }
   </style>
 </head>
 <body>
@@ -31,7 +55,7 @@
   <div id="header" class="header" style="background: linear-gradient(rgba(34,34,34,0.55), rgba(34,34,34,0.55)), url('imagenes/IMG-20240614-WA0012.jpg') center/cover no-repeat; padding: 122px 0; border-radius: 18px; margin: 24px auto; max-width: 2000px; box-shadow: 0 4px 24px rgba(60,60,60,0.08);">
     <h1 style="text-align: center; margin-bottom: 10px; color: #fff;">Perfil Profesional</h1>
     <p style="text-align: center; margin-bottom: 22px; color: #f3f4f6;">Abogada con X años de experiencia</p>
-    <div style="text-align: center;" id="header-button">
+    <div id="header-button">
       <button id="contactame-btn" style="background: #5D3A00; color: #fff; border: none; border-radius: 8px; padding: 10px 28px; font-size: 1rem; cursor: pointer; transition: background 0.2s;">Contáctame</button>
     </div>
   </div>
@@ -53,36 +77,38 @@
   </div>
 
   <!-- Título de la galería -->
-  <div style="text-align: center; margin-top: 60px; margin-bottom: 24px;">
-    <h2 style="
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #1f2937;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(6px);
-      display: inline-block;
-      padding: 14px 28px;
-      border-radius: 16px;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.08);
-    ">
-      Casos Destacados
-    </h2>
+  <div id="titulo-casos" class="section-title">
+    <h2>Casos Destacados</h2>
   </div>
 
-  <!-- Galería -->
-  <div id="gallery" class="photo-grid">
+ <!-- Galería con nuevo Grid Layout -->
+<div id="gallery" class="parent">
+  <div class="div1">
     <a href="caso1.html?id=1" class="photo-box">
-     <img src="imagenes/IMG-20240614-WA0012.jpg" alt="Caso 1" />
+      <img src="imagenes/IMG-20240614-WA0012.jpg" alt="Caso 1" />
     </a>
+  </div>
+  <div class="div2">
     <a href="caso2.html?id=2" class="photo-box">
       <img src="imagenes/IMG-20240618-WA0002.jpg" alt="Caso 2" />
     </a>
+  </div>
+  <div class="div3">
     <a href="caso3.html?id=3" class="photo-box">
       <img src="imagenes/IMG-20241008-WA0145.jpg" alt="Caso 3" />
     </a>
+  </div>
+  <div class="div4">
     <a href="caso4.html?id=4" class="photo-box">
       <img src="imagenes/IMG_20240620_103719_601.jpg" alt="Caso 4" />
     </a>
+  </div>
+</div>
+
+
+  <!-- Título "Contáctame" sobre el formulario -->
+  <div id="titulo-contacto" class="section-title">
+    <h2>Contáctame</h2>
   </div>
 
   <!-- Formulario -->
@@ -110,18 +136,20 @@
     const tabs = document.querySelectorAll(".tab");
     const headerButton = document.getElementById("header-button");
     const contactameBtn = document.getElementById("contactame-btn");
-    const header = document.getElementById("header");
     const stats = document.getElementById("stats");
     const gallery = document.getElementById("gallery");
     const form = document.getElementById("form");
+    const tituloCasos = document.getElementById("titulo-casos");
+    const tituloContacto = document.getElementById("titulo-contacto");
 
     function mostrarContacto() {
       headerButton.classList.add("hidden");
       stats.classList.add("hidden");
       gallery.classList.add("hidden");
+      tituloCasos.classList.add("hidden");
+      tituloContacto.classList.add("hidden");
       form.classList.remove("hidden");
 
-      // Activar pestaña de contacto visualmente
       tabs.forEach(t => t.classList.remove("active"));
       document.querySelector('[data-tab="contacto"]').classList.add("active");
     }
@@ -137,12 +165,13 @@
           headerButton.classList.remove("hidden");
           stats.classList.remove("hidden");
           gallery.classList.remove("hidden");
+          tituloCasos.classList.remove("hidden");
+          tituloContacto.classList.remove("hidden");
           form.classList.remove("hidden");
         }
       });
     });
 
-    // Accion del boton "Contáctame" dentro del encabezado
     contactameBtn.addEventListener("click", mostrarContacto);
 
     function animateCountUp(element, target, duration = 2000) {
