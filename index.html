@@ -299,38 +299,41 @@
 
 
 
-
-
-
-
-
 document.getElementById('contactame-btn').addEventListener('click', () => {
-  // Mostrar solo las secciones necesarias
-  document.getElementById('header').style.display = 'block';
-  document.getElementById('form').style.display = 'block';
-  document.getElementById('testimonios').style.display = 'flex';
-  document.querySelector('footer').style.display = 'block';
+  // IDs de secciones a mostrar
+  const mostrarIDs = ['header', 'form', 'testimonios'];
+  const mostrarTag = document.querySelector('footer');
 
-  // Ocultar el resto
+  // Mostrar secciones necesarias
+  mostrarIDs.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = '';
+  });
+  if (mostrarTag) mostrarTag.style.display = '';
+
+  // Ocultar todas las demás secciones principales
   const seccionesOcultar = [
-    document.querySelector('.tabs'),
-    document.getElementById('stats'),
-    document.getElementById('titulo-casos'),
-    document.getElementById('gallery'),
-    document.getElementById('info-abogada'),
-    document.getElementById('titulo-contacto')
+    '.tabs',
+    '#stats',
+    '#titulo-casos',
+    '#gallery',
+    '#info-abogada',
+    '#titulo-contacto',
+    '.section-title',  // Por si quedan títulos duplicados
+    '.vision-panel'    // Por si hay otros paneles visuales
   ];
 
-  seccionesOcultar.forEach(sec => {
-    if (sec) sec.style.display = 'none';
+  seccionesOcultar.forEach(selector => {
+    document.querySelectorAll(selector).forEach(el => {
+      if (!mostrarIDs.includes(el.id)) {
+        el.style.display = 'none';
+      }
+    });
   });
 
-  // Hacer scroll al formulario suavemente
+  // Scroll suave hacia el formulario
   document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
 });
-
-
-
 
 
 
