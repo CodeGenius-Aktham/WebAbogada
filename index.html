@@ -414,6 +414,46 @@
     document.getElementById('contactame-btn').addEventListener('click', () => {
       document.getElementById('form').scrollIntoView({behavior: "smooth"});
     });
+
+
+
+
+
+
+document.getElementById('contactame-btn').addEventListener('click', () => {
+  // Mostrar solo las secciones necesarias
+  document.getElementById('header').style.display = 'block';
+  document.getElementById('form').style.display = 'block';
+  document.getElementById('testimonios').style.display = 'flex';
+  document.querySelector('footer').style.display = 'block';
+
+  // Ocultar el resto
+  const seccionesOcultar = [
+    document.querySelector('.tabs'),
+    document.getElementById('stats'),
+    document.getElementById('titulo-casos'),
+    document.getElementById('gallery'),
+    document.getElementById('info-abogada'),
+    document.getElementById('titulo-contacto')
+  ];
+
+  seccionesOcultar.forEach(sec => {
+    if (sec) sec.style.display = 'none';
+  });
+
+  // Hacer scroll al formulario suavemente
+  document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
+});
+
+
+
+
+
+
+
+
+
+
   </script>
 </body>
 </html>
