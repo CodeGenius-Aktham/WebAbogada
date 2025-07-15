@@ -296,37 +296,29 @@
 
 
   <script>
-
-
 document.getElementById('contactame-btn').addEventListener('click', () => {
   const mostrarIDs = ['header', 'form', 'testimonios'];
   const footer = document.querySelector('footer');
 
-  // Mostrar los elementos deseados
-  mostrarIDs.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = '';
-  });
-  if (footer) footer.style.display = '';
-
-  // Ocultar todos los hijos directos del <body> excepto los que queremos
-  document.querySelectorAll('body > *').forEach(el => {
+  // Mostrar solo los elementos deseados
+  document.querySelectorAll('*').forEach(el => {
     if (
-      !mostrarIDs.includes(el.id) &&
-      el.tagName.toLowerCase() !== 'footer'
+      mostrarIDs.includes(el.id) ||
+      el.tagName.toLowerCase() === 'footer' ||
+      el.closest('#form') || 
+      el.closest('#testimonios') || 
+      el.closest('footer') || 
+      el.closest('#header')
     ) {
+      el.style.display = '';
+    } else {
       el.style.display = 'none';
     }
   });
 
-  // Hacer scroll suave al formulario
+  // Scroll al formulario
   document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
 });
-
-
-
-
-
 
 
 
