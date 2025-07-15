@@ -97,6 +97,151 @@
     </a>
   </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Contenedor padre con position relative y tamaño definido -->
+<div id="info-abogada" style="display: flex; gap: 30px; max-width: 1000px; margin: 40px auto; position: relative; height: 500px;">
+
+  <!-- Imagen izquierda -->
+  <div style="flex: 1;">
+    <img src="imagenes/abogada-ejemplo.jpg" alt="Abogada" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+
+  <!-- Contenedor de ventanas movibles -->
+  <div id="contenedor-ventanas" style="flex: 1; position: relative; height: 100%; border: 1px solid transparent;">
+    
+    <div class="ventana" style="position: absolute; top: 0; left: 0; width: 280px; background: #fff; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.12);">
+      <div class="titulo-ventana" style="background: #5D3A00; color: white; padding: 12px; border-radius: 12px 12px 0 0; font-weight: 700; user-select: none; cursor: grab;">
+        Experiencia
+      </div>
+      <div style="padding: 14px; font-family: 'Merriweather', serif; font-size: 0.95rem; color: #2d2d2d;">
+        Más de 10 años ayudando a clientes en derecho civil, penal y corporativo.
+      </div>
+    </div>
+
+    <div class="ventana" style="position: absolute; top: 80px; left: 160px; width: 280px; background: #fff; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.12);">
+      <div class="titulo-ventana" style="background: #5D3A00; color: white; padding: 12px; border-radius: 12px 12px 0 0; font-weight: 700; user-select: none; cursor: grab;">
+        Filosofía
+      </div>
+      <div style="padding: 14px; font-family: 'Merriweather', serif; font-size: 0.95rem; color: #2d2d2d;">
+        Mi prioridad es la atención personalizada y la búsqueda de soluciones efectivas para cada caso.
+      </div>
+    </div>
+
+    <div class="ventana" style="position: absolute; top: 180px; left: 80px; width: 280px; background: #fff; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.12);">
+      <div class="titulo-ventana" style="background: #5D3A00; color: white; padding: 12px; border-radius: 12px 12px 0 0; font-weight: 700; user-select: none; cursor: grab;">
+        Áreas de práctica
+      </div>
+      <div style="padding: 14px; font-family: 'Merriweather', serif; font-size: 0.95rem; color: #2d2d2d;">
+        Derecho familiar, laboral, penal y asesoría corporativa para PYMEs y particulares.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .ventana {
+    user-select: none;
+  }
+  .titulo-ventana {
+    cursor: grab;
+    user-select: none;
+  }
+  .titulo-ventana:active {
+    cursor: grabbing;
+  }
+</style>
+
+<script>
+  const contenedor = document.getElementById('contenedor-ventanas');
+
+  document.querySelectorAll('.ventana').forEach(ventana => {
+    const barraTitulo = ventana.querySelector('.titulo-ventana');
+
+    barraTitulo.onmousedown = function(event) {
+      event.preventDefault();
+
+      const contenedorRect = contenedor.getBoundingClientRect();
+      const ventanaRect = ventana.getBoundingClientRect();
+
+      // Distancia del click dentro de la ventana
+      const offsetX = event.clientX - ventanaRect.left;
+      const offsetY = event.clientY - ventanaRect.top;
+
+      function onMouseMove(moveEvent) {
+        let newLeft = moveEvent.clientX - contenedorRect.left - offsetX;
+        let newTop = moveEvent.clientY - contenedorRect.top - offsetY;
+
+        // Limitar dentro del contenedor
+        const maxLeft = contenedor.clientWidth - ventana.offsetWidth;
+        const maxTop = contenedor.clientHeight - ventana.offsetHeight;
+
+        if (newLeft < 0) newLeft = 0;
+        if (newLeft > maxLeft) newLeft = maxLeft;
+
+        if (newTop < 0) newTop = 0;
+        if (newTop > maxTop) newTop = maxTop;
+
+        ventana.style.left = newLeft + 'px';
+        ventana.style.top = newTop + 'px';
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      document.addEventListener('mouseup', () => {
+        document.removeEventListener('mousemove', onMouseMove);
+      }, { once: true });
+    };
+
+    barraTitulo.ondragstart = () => false; // Evitar comportamiento predeterminado drag
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <!-- Título "Contáctame" sobre el formulario -->
   <div id="titulo-contacto" class="section-title">
     <h2>Contáctame</h2>
