@@ -152,7 +152,8 @@
   <!-- Navegación tipo pestañas -->
   <div class="tabs">
     <div class="tab active" data-tab="sobre">Sobre mí</div>
-    <div class="tab" data-tab="contacto">Contacto</div>
+    <div class="tab" id="contacto-tab" data-tab="contacto">Contacto</div>
+
   </div>
 
   <!-- Encabezado de página -->
@@ -296,24 +297,24 @@
 
 
   <script>
-  document.getElementById('contactame-btn').addEventListener('click', () => {
+  document.getElementById('contacto-tab').addEventListener('click', () => {
   const header = document.getElementById('header');
   const form = document.getElementById('form');
   const testimonios = document.getElementById('testimonios');
   const footer = document.querySelector('footer');
 
-  // Oculta todo primero
+  // Oculta todo
   document.querySelectorAll('body > *').forEach(el => {
     el.style.display = 'none';
   });
 
-  // Muestra solo los que queremos
+  // Muestra solo lo necesario
   header.style.display = '';
   form.style.display = '';
   testimonios.style.display = '';
   footer.style.display = '';
 
-  // Oculta el botón "Contáctame" dentro del header
+  // Oculta el botón grande dentro del header
   const btn = document.getElementById('header-button');
   if (btn) btn.style.display = 'none';
 
