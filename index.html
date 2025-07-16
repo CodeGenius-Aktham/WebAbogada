@@ -150,7 +150,7 @@
 <body>
 
   <!-- Navegación tipo pestañas -->
-  <div class="tabs">
+  <div class="tabs" id="tabs">
     <div class="tab active" data-tab="sobre">Sobre mí</div>
     <div class="tab" id="contacto-tab" data-tab="contacto">Contacto</div>
 
@@ -297,30 +297,61 @@
 
 
   <script>
-  document.getElementById('contacto-tab').addEventListener('click', () => {
-  const header = document.getElementById('header');
-  const form = document.getElementById('form');
-  const testimonios = document.getElementById('testimonios');
+function mostrarSeccionContacto() {
+  const seccionesAMostrar = ['header', 'form', 'testimonios', 'tabs'];
   const footer = document.querySelector('footer');
 
-  // Oculta todo
+  // Oculta todos los elementos del body
   document.querySelectorAll('body > *').forEach(el => {
     el.style.display = 'none';
   });
 
-  // Muestra solo lo necesario
-  header.style.display = '';
-  form.style.display = '';
-  testimonios.style.display = '';
-  footer.style.display = '';
+  // Muestra solo las secciones necesarias
+  seccionesAMostrar.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = '';
+  });
 
-  // Oculta el botón grande dentro del header
+  // Muestra el footer
+  if (footer) footer.style.display = '';
+
+  // Oculta el botón grande "Contáctame"
   const btn = document.getElementById('header-button');
   if (btn) btn.style.display = 'none';
 
   // Scroll al formulario
-  form.scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Botón grande "Contáctame"
+document.getElementById('contactame-btn').addEventListener('click', mostrarSeccionContacto);
+
+// Pestaña "Contacto"
+document.getElementById('contacto-tab').addEventListener('click', mostrarSeccionContacto);
+
+
+
+
+
+
+document.querySelector('.tab[data-tab="sobre"]').addEventListener('click', () => {
+  // Restablece todas las secciones del body
+  document.querySelectorAll('body > *').forEach(el => {
+    el.style.display = '';
+  });
+
+  // Vuelve a mostrar el botón "Contáctame"
+  const btn = document.getElementById('header-button');
+  if (btn) btn.style.display = '';
 });
+
+
+
+
+
+
+
+
 
 
 
