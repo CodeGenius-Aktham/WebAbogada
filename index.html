@@ -16,22 +16,151 @@
       box-shadow: 0 12px 32px rgba(60,60,60,0.18);
       z-index: 2;
     }
+
     .hidden { display: none; }
+
+    .section-title {
+      text-align: center;
+      margin: 60px auto 24px;
+    }
+
+    .section-title h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1f2937;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(6px);
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+    }
+
+    /* BOTÓN CENTRADO */
+    #header-button {
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    /* CONTENEDOR INFO ABOGADA - Desktop */
+    #info-abogada {
+      display: flex;
+      gap: 30px;
+      max-width: 1000px;
+      margin: 40px auto;
+      position: relative;
+      height: 500px;
+    }
+
+    #info-abogada > div:first-child {
+      flex: 1;
+    }
+
+    #info-abogada > div:first-child img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    #contenedor-ventanas {
+      flex: 1;
+      position: relative;
+      height: 100%;
+      border: 1px solid transparent;
+    }
+
+    .ventana {
+      position: absolute;
+      width: 280px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      user-select: none;
+    }
+
+    .ventana .titulo-ventana {
+      background: #5D3A00;
+      color: white;
+      padding: 12px;
+      border-radius: 12px 12px 0 0;
+      font-weight: 700;
+      user-select: none;
+      cursor: grab;
+    }
+    .ventana .titulo-ventana:active {
+      cursor: grabbing;
+    }
+
+    /* Posiciones iniciales de ventanas desktop */
+    .ventana:nth-child(1) {
+      top: 0;
+      left: 0;
+    }
+    .ventana:nth-child(2) {
+      top: 80px;
+      left: 160px;
+    }
+    .ventana:nth-child(3) {
+      top: 180px;
+      left: 80px;
+    }
+
+    /* Responsive - Teléfono */
+    @media (max-width: 767px) {
+      #info-abogada {
+        flex-direction: column;
+        height: auto;
+        max-width: 90%;
+      }
+
+      #info-abogada > div:first-child {
+        height: 250px;
+      }
+
+      #info-abogada > div:first-child img {
+        height: 100%;
+        border-radius: 18px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      }
+
+      #contenedor-ventanas {
+        position: static;
+        height: auto;
+        border: none;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .ventana {
+        position: static !important;
+        width: 100%;
+        cursor: default;
+      }
+
+      .ventana .titulo-ventana {
+        cursor: default;
+      }
+    }
   </style>
 </head>
 <body>
 
   <!-- Navegación tipo pestañas -->
-  <div class="tabs">
+  <div class="tabs" id="tabs">
     <div class="tab active" data-tab="sobre">Sobre mí</div>
-    <div class="tab" data-tab="contacto">Contacto</div>
+    <div class="tab" id="contacto-tab" data-tab="contacto">Contacto</div>
+
   </div>
 
   <!-- Encabezado de página -->
-  <div id="header" class="header" style="background: linear-gradient(rgba(34,34,34,0.55), rgba(34,34,34,0.55)), url('imagenes/IMG-20240614-WA0012.jpg') center/cover no-repeat; padding: 122px 0; border-radius: 18px; margin: 24px auto; max-width: 2000px; box-shadow: 0 4px 24px rgba(60,60,60,0.08);">
+  <div id="header" class="header" style="background: linear-gradient(rgba(34,34,34,0.55), rgba(34,34,34,0.55)), url('imagenes/1.png') center/cover no-repeat; padding: 122px 0; border-radius: 18px; margin: 24px auto; max-width: 2000px; box-shadow: 0 4px 24px rgba(60,60,60,0.08);">
     <h1 style="text-align: center; margin-bottom: 10px; color: #fff;">Perfil Profesional</h1>
     <p style="text-align: center; margin-bottom: 22px; color: #f3f4f6;">Abogada con X años de experiencia</p>
-    <div style="text-align: center;" id="header-button">
+    <div id="header-button">
       <button id="contactame-btn" style="background: #5D3A00; color: #fff; border: none; border-radius: 8px; padding: 10px 28px; font-size: 1rem; cursor: pointer; transition: background 0.2s;">Contáctame</button>
     </div>
   </div>
@@ -53,121 +182,310 @@
   </div>
 
   <!-- Título de la galería -->
-  <div style="text-align: center; margin-top: 60px; margin-bottom: 24px;">
-    <h2 style="
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #1f2937;
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(6px);
-      display: inline-block;
-      padding: 14px 28px;
-      border-radius: 16px;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.08);
-    ">
-      Casos Destacados
-    </h2>
+  <div id="titulo-casos" class="section-title">
+    <h2>Casos Destacados</h2>
   </div>
 
   <!-- Galería -->
   <div id="gallery" class="photo-grid">
     <a href="caso1.html?id=1" class="photo-box">
-     <img src="imagenes/IMG-20240614-WA0012.jpg" alt="Caso 1" />
+     <img src="imagenes/1.png" alt="Caso 1" />
     </a>
     <a href="caso2.html?id=2" class="photo-box">
-      <img src="imagenes/IMG-20240618-WA0002.jpg" alt="Caso 2" />
+      <img src="imagenes/2.png" alt="Caso 2" />
     </a>
     <a href="caso3.html?id=3" class="photo-box">
-      <img src="imagenes/IMG-20241008-WA0145.jpg" alt="Caso 3" />
+      <img src="imagenes/3.png" alt="Caso 3" />
     </a>
     <a href="caso4.html?id=4" class="photo-box">
-      <img src="imagenes/IMG_20240620_103719_601.jpg" alt="Caso 4" />
+      <img src="imagenes/4.png" alt="Caso 4" />
     </a>
+  </div>
+
+  <!-- Contenedor padre con position relative y tamaño definido -->
+  <div id="info-abogada">
+
+    <!-- Imagen izquierda -->
+    <div>
+      <img src="imagenes/abogada-ejemplo.jpg" alt="Abogada">
+    </div>
+
+    <!-- Contenedor de ventanas movibles -->
+    <div id="contenedor-ventanas">
+      
+      <div class="ventana">
+        <div class="titulo-ventana">
+          Experiencia
+        </div>
+        <div style="padding: 14px; font-family: 'Merriweather', serif; font-size: 0.95rem; color: #2d2d2d;">
+          Más de 10 años ayudando a clientes en derecho civil, penal y corporativo.
+        </div>
+      </div>
+
+      <div class="ventana">
+        <div class="titulo-ventana">
+          Filosofía
+        </div>
+        <div style="padding: 14px; font-family: 'Merriweather', serif; font-size: 0.95rem; color: #2d2d2d;">
+          Mi prioridad es la atención personalizada y la búsqueda de soluciones efectivas para cada caso.
+        </div>
+      </div>
+
+      <div class="ventana">
+        <div class="titulo-ventana">
+          Áreas de práctica
+        </div>
+        <div style="padding: 14px; font-family: 'Merriweather', serif; font-size: 0.95rem; color: #2d2d2d;">
+          Derecho familiar, laboral, penal y asesoría corporativa para PYMEs y particulares.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Título "Contáctame" sobre el formulario -->
+  <div id="titulo-contacto" class="section-title">
+    <h2>Contáctame</h2>
   </div>
 
   <!-- Formulario -->
   <div id="form" class="form-panel lift-on-hover">
-    <form class="formulario-contacto">
-      <div class="row">
-        <input type="text" placeholder="Nombre" required />
-        <input type="text" placeholder="Apellido" required />
+    <form id="contact-form" class="formulario-contacto">
+      <div class="row" style="display:flex; gap:10px; margin-bottom:10px;">
+        <input type="text" name="nombre" placeholder="Nombre" required style="flex:1; padding:8px;"/>
+        <input type="text" name="apellido" placeholder="Apellido" required style="flex:1; padding:8px;"/>
       </div>
-      <input type="email" placeholder="Correo electrónico" required />
-      <textarea placeholder="Escriba su caso aquí..." rows="5" required></textarea>
-      <button type="submit">Enviar</button>
+      <input type="email" name="correo" placeholder="Correo electrónico" required style="width:100%; padding:8px; margin-bottom:10px;"/>
+      <textarea name="mensaje" placeholder="Escriba su caso aquí..." rows="5" required style="width:100%; padding:8px; margin-bottom:10px;"></textarea>
+      <button type="submit" style="background:#5D3A00; color:#fff; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:1rem;">Enviar</button>
     </form>
   </div>
 
-  <!-- Footer -->
-  <footer class="footer">
+  <!-- Panel de Testimonios -->
+  <div id="testimonios" class="vision-panel lift-on-hover" style="flex-direction: column; text-align: center; margin-top: 40px; position: relative;">
+    <h3 style="margin-bottom: 1rem; font-size: 1.4rem;">Testimonios de Clientes</h3>
+
+    <div id="testimonio-contenido" style="font-size: 1.1rem; font-style: italic; max-width: 600px; margin: 0 auto 1rem;">
+      “Gracias a su dedicación, pude resolver mi situación legal con rapidez y claridad. La recomiendo totalmente.”
+    </div>
+
+    <div id="testimonio-autor" style="font-weight: bold; color: #5D3A00;">
+      — Marta López
+    </div>
+
+    <!-- Estrellas -->
+    <div id="estrellas-container" style="margin-top: 8px; font-size: 1.4rem; color: gold;">
+      ★★★★★
+    </div>
+
+    <!-- Botones de navegación -->
+    <button id="prev-testimonio" style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 2rem; color: #5D3A00; cursor: pointer;">&#8249;</button>
+    <button id="next-testimonio" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 2rem; color: #5D3A00; cursor: pointer;">&#8250;</button>
+  </div>
+
+
+
+    <footer class="footer">
     <div class="container">
       <p>&copy; 2025 Bufete Legal. Todos los derechos reservados.</p>
+      <p>Conoceme mas en:</p>
+      <a href="caso1.html"><img src="imagenes/Instagram.png" height="40px" style="border-radius: 70px;"></a>
+      <a href="caso2.html"><img src="imagenes/facebook.png" height="40px" style="border-radius: 70px;"></a>
+      <a href="caso3.html"><img src="imagenes/X.png" height="33px" style="border-radius: 70px;"></a>
     </div>
   </footer>
 
-  <!-- Scripts -->
+
   <script>
-    const tabs = document.querySelectorAll(".tab");
-    const headerButton = document.getElementById("header-button");
-    const contactameBtn = document.getElementById("contactame-btn");
-    const header = document.getElementById("header");
-    const stats = document.getElementById("stats");
-    const gallery = document.getElementById("gallery");
-    const form = document.getElementById("form");
+function mostrarSeccionContacto() {
+  const seccionesAMostrar = ['header', 'form', 'testimonios', 'tabs'];
+  const footer = document.querySelector('footer');
 
-    function mostrarContacto() {
-      headerButton.classList.add("hidden");
-      stats.classList.add("hidden");
-      gallery.classList.add("hidden");
-      form.classList.remove("hidden");
+  // Oculta todos los elementos del body
+  document.querySelectorAll('body > *').forEach(el => {
+    el.style.display = 'none';
+  });
 
-      // Activar pestaña de contacto visualmente
-      tabs.forEach(t => t.classList.remove("active"));
-      document.querySelector('[data-tab="contacto"]').classList.add("active");
+  // Muestra solo las secciones necesarias
+  seccionesAMostrar.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = '';
+  });
+
+  // Muestra el footer
+  if (footer) footer.style.display = '';
+
+  // Oculta el botón grande "Contáctame"
+  const btn = document.getElementById('header-button');
+  if (btn) btn.style.display = 'none';
+
+  // Scroll al formulario
+  document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Botón grande "Contáctame"
+document.getElementById('contactame-btn').addEventListener('click', mostrarSeccionContacto);
+
+// Pestaña "Contacto"
+document.getElementById('contacto-tab').addEventListener('click', mostrarSeccionContacto);
+
+
+
+
+
+
+document.querySelector('.tab[data-tab="sobre"]').addEventListener('click', () => {
+  // Restablece todas las secciones del body
+  document.querySelectorAll('body > *').forEach(el => {
+    el.style.display = '';
+  });
+
+  // Vuelve a mostrar el botón "Contáctame"
+  const btn = document.getElementById('header-button');
+  if (btn) btn.style.display = '';
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Contar números animados
+    function animateCountUp(el) {
+      const target = +el.getAttribute('data-target');
+      let count = 0;
+      const increment = Math.ceil(target / 60);
+      const interval = setInterval(() => {
+        count += increment;
+        if (count >= target) {
+          el.textContent = target;
+          clearInterval(interval);
+        } else {
+          el.textContent = count;
+        }
+      }, 16);
     }
 
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        tabs.forEach(t => t.classList.remove("active"));
-        tab.classList.add("active");
+    document.querySelectorAll('.count-up').forEach(el => animateCountUp(el));
 
-        if (tab.dataset.tab === "contacto") {
-          mostrarContacto();
-        } else {
-          headerButton.classList.remove("hidden");
-          stats.classList.remove("hidden");
-          gallery.classList.remove("hidden");
-          form.classList.remove("hidden");
-        }
+    // Tabs simples
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        // Aquí se puede mostrar contenido según tab, si deseas
       });
     });
 
-    // Accion del boton "Contáctame" dentro del encabezado
-    contactameBtn.addEventListener("click", mostrarContacto);
+    // Testimonios
+    const testimonios = [
+      {
+        texto: "Gracias a su dedicación, pude resolver mi situación legal con rapidez y claridad. La recomiendo totalmente.",
+        autor: "Marta López",
+        estrellas: 5
+      },
+      {
+        texto: "Un profesional confiable y atento que siempre escucha y brinda soluciones.",
+        autor: "Juan Pérez",
+        estrellas: 4
+      },
+      {
+        texto: "Excelente atención y resultados efectivos en mi caso legal.",
+        autor: "Ana Gómez",
+        estrellas: 5
+      }
+    ];
+    let testIndex = 0;
+    const contenidoTest = document.getElementById('testimonio-contenido');
+    const autorTest = document.getElementById('testimonio-autor');
+    const estrellasCont = document.getElementById('estrellas-container');
 
-    function animateCountUp(element, target, duration = 2000) {
-      let start = 0;
-      const increment = target / (duration / 16);
-      const update = () => {
-        start += increment;
-        if (start >= target) {
-          element.textContent = target;
-        } else {
-          element.textContent = Math.floor(start);
-          requestAnimationFrame(update);
-        }
-      };
-      update();
+    function mostrarTestimonio(i) {
+      const t = testimonios[i];
+      contenidoTest.textContent = `“${t.texto}”`;
+      autorTest.textContent = `— ${t.autor}`;
+      estrellasCont.textContent = '★'.repeat(t.estrellas) + '☆'.repeat(5 - t.estrellas);
     }
 
-    window.addEventListener("DOMContentLoaded", () => {
-      const counters = document.querySelectorAll(".count-up");
-      counters.forEach(counter => {
-        const target = +counter.getAttribute("data-target");
-        animateCountUp(counter, target);
-      });
+    document.getElementById('prev-testimonio').addEventListener('click', () => {
+      testIndex = (testIndex - 1 + testimonios.length) % testimonios.length;
+      mostrarTestimonio(testIndex);
     });
+
+    document.getElementById('next-testimonio').addEventListener('click', () => {
+      testIndex = (testIndex + 1) % testimonios.length;
+      mostrarTestimonio(testIndex);
+    });
+
+    mostrarTestimonio(testIndex);
+
+    // Drag para ventanas movibles solo en desktop
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    if (!isMobile) {
+      const contenedor = document.getElementById('contenedor-ventanas');
+
+      document.querySelectorAll('.ventana').forEach(ventana => {
+        const barraTitulo = ventana.querySelector('.titulo-ventana');
+
+        barraTitulo.onmousedown = function(event) {
+          event.preventDefault();
+
+          const contenedorRect = contenedor.getBoundingClientRect();
+          const ventanaRect = ventana.getBoundingClientRect();
+
+          const offsetX = event.clientX - ventanaRect.left;
+          const offsetY = event.clientY - ventanaRect.top;
+
+          function onMouseMove(moveEvent) {
+            let newLeft = moveEvent.clientX - contenedorRect.left - offsetX;
+            let newTop = moveEvent.clientY - contenedorRect.top - offsetY;
+
+            const maxLeft = contenedor.clientWidth - ventana.offsetWidth;
+            const maxTop = contenedor.clientHeight - ventana.offsetHeight;
+
+            if (newLeft < 0) newLeft = 0;
+            if (newLeft > maxLeft) newLeft = maxLeft;
+
+            if (newTop < 0) newTop = 0;
+            if (newTop > maxTop) newTop = maxTop;
+
+            ventana.style.left = newLeft + 'px';
+            ventana.style.top = newTop + 'px';
+          }
+
+          document.addEventListener('mousemove', onMouseMove);
+
+          document.addEventListener('mouseup', () => {
+            document.removeEventListener('mousemove', onMouseMove);
+          }, { once: true });
+        };
+
+        barraTitulo.ondragstart = () => false;
+      });
+    }
+
+    // Botón "Contáctame" para scroll al formulario
+    document.getElementById('contactame-btn').addEventListener('click', () => {
+      document.getElementById('form').scrollIntoView({behavior: "smooth"});
+    });
+
+
+
+
+
+
+
+
+
+
+
   </script>
-
 </body>
 </html>
