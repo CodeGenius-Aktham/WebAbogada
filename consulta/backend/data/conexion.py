@@ -30,4 +30,4 @@ def conexion_db():
         return None
     except IntegrityError as error:
         conn.rollback() # Se deshacen los cambios si la conexion falla.
-        return jsonify({'error' : 'error de integridad con la base de datos.'}),400
+        return jsonify({'error' : f'error de integridad con la base de datos : {str(error)}.'}),400
