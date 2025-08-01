@@ -8,7 +8,7 @@ import re # Validacion del correo electronico.
 
 # Identificador de la aplicacion.
 app = Flask(__name__)
-CORS(app,origins='ejemplo.com',supports_credentials=True) # URL del fronted con credenciales para hacer peticiones.
+CORS(app,origins='https://codegenius-aktham.github.io/WebAbogada/',supports_credentials=True) # URL del fronted con credenciales para hacer peticiones.
 app.register_blueprint(email)
 
 def conexion_db():
