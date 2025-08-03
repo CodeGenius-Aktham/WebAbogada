@@ -165,6 +165,12 @@
     </div>
   </div>
 
+
+
+
+
+
+
   <!-- Panel de estadísticas -->
   <div id="stats" class="vision-panel">
     <div class="stat">
@@ -181,7 +187,12 @@
     </div>
   </div>
 
-  
+
+
+
+
+
+
 
 <!-- Título de la sección -->
 <div id="titulo-documentos" class="section-title">
@@ -253,6 +264,16 @@
     </a>
   </div>
 
+
+
+
+
+
+
+
+
+
+
   <!-- Contenedor padre con position relative y tamaño definido -->
   <div id="info-abogada">
 
@@ -299,18 +320,67 @@
     <h2>Contáctame</h2>
   </div>
 
-  <!-- Formulario -->
-  <div id="form" class="form-panel lift-on-hover">
-    <form id="contact-form" class="formulario-contacto">
-      <div class="row" style="display:flex; gap:10px; margin-bottom:10px;">
-        <input type="text" name="nombre" placeholder="Nombre" required style="flex:1; padding:8px;"/>
-        <input type="text" name="apellido" placeholder="Apellido" required style="flex:1; padding:8px;"/>
-      </div>
-      <input type="email" name="correo" placeholder="Correo electrónico" required style="width:100%; padding:8px; margin-bottom:10px;"/>
-      <textarea name="mensaje" placeholder="Escriba su caso aquí..." rows="5" required style="width:100%; padding:8px; margin-bottom:10px;"></textarea>
-      <button type="submit" style="background:#5D3A00; color:#fff; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:1rem;">Enviar</button>
-    </form>
-  </div>
+
+
+
+
+
+
+
+
+<!-- Formulario -->
+<div id="form" class="form-panel lift-on-hover">
+  <form id="contact-form" class="formulario-contacto">
+    <div class="row" style="display:flex; gap:10px; margin-bottom:10px;">
+      <input type="text" name="nombre" placeholder="Nombre" required style="flex:1; padding:8px;" />
+      <input type="text" name="apellido" placeholder="Apellido" required style="flex:1; padding:8px;" />
+    </div>
+    <input type="email" name="correo" placeholder="Correo electrónico" required style="width:100%; padding:8px; margin-bottom:10px;" />
+    <textarea name="mensaje" placeholder="Escriba su caso aquí..." rows="5" required style="width:100%; padding:8px; margin-bottom:10px;"></textarea>
+    <button id="submit-btn" type="submit" style="background:#5D3A00; color:#fff; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:1rem;">Enviar</button>
+  </form>
+</div>
+
+<!-- Script para enviar con fetch -->
+<script>
+document.getElementById('contact-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const form = this;
+  const button = document.getElementById('submit-btn');
+  button.disabled = true;
+  button.textContent = 'Enviando...';
+
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+
+  fetch('https://web-abogada.onrender.com', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(response => {
+    if (!response.ok) throw new Error('Error al enviar el formulario');
+    return response.json();
+  })
+  .then(result => {
+    alert('Formulario enviado con éxito. ¡Gracias por contactarnos!');
+    form.reset();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Hubo un problema al enviar el formulario. Inténtalo más tarde.');
+  })
+  .finally(() => {
+    button.disabled = false;
+    button.textContent = 'Enviar';
+  });
+});
+</script>
+
+
+
+
 
   <!-- Panel de Testimonios -->
   <div id="testimonios" class="vision-panel lift-on-hover" style="flex-direction: column; text-align: center; margin-top: 40px; position: relative;">
